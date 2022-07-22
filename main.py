@@ -12,7 +12,6 @@ headers = {
 res = requests.get(url, headers=headers)
 
 def Get_Sallary():
-    url = 'https://www.jobstreet.co.id/id/job-search/laravel-developer-jobs-in-bogor/'
 
     res = requests.get(url, headers=headers)
 
@@ -26,10 +25,20 @@ def Get_Sallary():
         outfile.close()
 
     soup = BeautifulSoup(res.text, 'html.parser')
-    result = soup.find('div', 'sx2jih0 zcydq8n lmSnC_0')
-    sallary = result.find_all('span', 'sx2jih0 zcydq84u _18qlyvc0 _18qlyvc1x _18qlyvc3 _18qlyvc7')[1].text
-    print(sallary)
+    result = soup.find_all('div', 'sx2jih0 zcydq8n lmSnC_0')
+    # sallary = result.find_all('span', 'sx2jih0 zcydq84u _18qlyvc0 _18qlyvc1x _18qlyvc3 _18qlyvc7')[1].text
+    # print(sallary)
 
+    for item in result:
+        try :
+            sallary = item.find_all('span', 'sx2jih0 zcydq84u _18qlyvc0 _18qlyvc1x _18qlyvc3 _18qlyvc7')[1].text
+        except IndexError:
+            return
+        title = item.find_all('span', 'sx2jih0 yaBKt_0')
+
+        print(title)
 
 if __name__ == '__main__':
     Get_Sallary()
+
+# item to scrape is : Title, Sallary, Company, Location
